@@ -89,8 +89,8 @@ async function share() {
 
     <section class="hero-card">
       <div class="thumbs" aria-hidden="true">
-        <span class="thumb fair"><svg viewBox="0 0 24 24"><path d="M2 10h4v11H2zM8 21h9.4a2 2 0 0 0 2-1.6l1.4-7A2 2 0 0 0 18.8 10H14l.7-3.4a1.5 1.5 0 0 0-.4-1.4L13.5 3 8 10z" fill="#fff" stroke="#000" stroke-width="1.4" stroke-linejoin="round" /></svg></span>
-        <span class="thumb unfair"><svg viewBox="0 0 24 24" style="transform:rotate(180deg)"><path d="M2 10h4v11H2zM8 21h9.4a2 2 0 0 0 2-1.6l1.4-7A2 2 0 0 0 18.8 10H14l.7-3.4a1.5 1.5 0 0 0-.4-1.4L13.5 3 8 10z" fill="#fff" stroke="#000" stroke-width="1.4" stroke-linejoin="round" /></svg></span>
+        <span class="thumb fair"><img src="/thumbup.svg" alt="" width="41" height="48"></span>
+        <span class="thumb unfair"><img src="/thumbdown.svg" alt="" width="41" height="48"></span>
       </div>
       <h2>Cengli - Bo Cengli?</h2>
       <p class="sub">Adil atau nggak?</p>
