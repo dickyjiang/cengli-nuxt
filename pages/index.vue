@@ -58,7 +58,7 @@ function onVoted() { voted.value = true }
 </script>
 
 <template>
-  <div :class="['stack', { started }]">
+  <div :class="['stack', 'home', { started }]">
     <section class="hero">
       <h1>Adil atau nggak?</h1>
       <p>Kamu yang nilai. Vote aja.</p>
