@@ -11,14 +11,33 @@ export type ModerationResult =
   | { verdict: 'pending'; reason: string }
   | { verdict: 'reject'; reason: string }
 
-// Langsung ditolak.
+// Langsung ditolak. Kata <= 4 huruf hanya cocok sebagai kata utuh (lihat hits()).
 export const HARD_WORDS: string[] = [
-  'anjing', 'bangsat', 'kontol', 'memek', 'ngentot', 'jancok', 'jancuk', 'pukimak', 'bajingan', 'asu'
+  // Indonesia / Betawi
+  'anjing', 'bangsat', 'kontol', 'memek', 'ngentot', 'jancok', 'jancuk', 'pukimak', 'bajingan', 'asu',
+  // Jawa / Sunda / Minang / lainnya
+  'dancok', 'diancuk', 'kimak', 'pantek', 'puki', 'pepek', 'jembut', 'sundal', 'lonte',
+  // Inggris
+  'fuck', 'fucking', 'fucker', 'motherfucker', 'cunt', 'bitch', 'asshole', 'faggot', 'nigger', 'nigga',
+  // SARA: hinaan langsung
+  'cindo'
 ]
 
-// Masuk antrean persetujuan (kasar ringan atau ambigu).
+// Masuk antrean persetujuan (kasar ringan, ambigu, SARA, atau politik).
 export const SOFT_WORDS: string[] = [
-  'tolol', 'goblok', 'bego', 'brengsek', 'sialan', 'kampret', 'tai', 'sange', 'bokep', 'bunuh'
+  // Kasar ringan
+  'tolol', 'goblok', 'bego', 'brengsek', 'sialan', 'kampret', 'tai', 'sange', 'bokep', 'bunuh',
+  'cuk', 'celeng', 'bacot', 'bangke', 'goblog', 'kehed', 'belegug', 'bodat', 'monyet', 'peler', 'titit', 'colmek',
+  'jablay', 'pelacur', 'banci', 'bencong',
+  // Kekerasan / seksual
+  'bacok', 'gorok', 'perkosa', 'porno', 'porn',
+  // Inggris
+  'shit', 'shitty', 'bullshit', 'bastard', 'dick', 'slut', 'whore',
+  // SARA
+  'kafir', 'cino', 'aseng', 'pribumi', 'yahudi', 'agama', 'islam', 'kristen', 'katolik', 'hindu', 'budha', 'buddha', 'konghucu', 'ateis', 'atheis',
+  // Politik praktis
+  'pilpres', 'pilkada', 'pemilu', 'capres', 'cawapres', 'partai', 'pdip', 'gerindra', 'golkar', 'nasdem', 'pkb', 'pks',
+  'prabowo', 'jokowi', 'gibran', 'anies', 'ganjar', 'megawati', 'cebong', 'kadrun', 'komunis', 'khilafah'
 ]
 
 const LEET: Record<string, string> = {

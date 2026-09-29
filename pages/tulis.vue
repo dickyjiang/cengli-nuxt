@@ -73,7 +73,7 @@ async function submit() {
     <section v-else class="card" aria-labelledby="w-title">
       <h2 id="w-title">Ceritain kasusnya</h2>
       <form @submit.prevent="submit">
-        <label for="story" class="msg">Singkat aja. Pakai inisial atau A, B, C. Jangan tulis nama lengkap, nomor HP, atau akun sosmed.</label>
+        <label for="story" class="msg">Singkat aja. Pakai inisial atau A, B, C. Jangan tulis nama lengkap, nomor HP, atau akun sosmed. Hindari SARA dan politik.</label>
         <textarea id="story" v-model="text" name="story" maxlength="500" placeholder="Contoh: Ada 2 temen deket A &amp; B. Si A lagi kejar satu cewe (C), tapi cewenya malah suka sama si B." />
         <span class="count">{{ text.length }} / 500</span>
 

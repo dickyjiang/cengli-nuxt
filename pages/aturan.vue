@@ -12,7 +12,7 @@ useHead({ title: 'Aturan & Privasi | Cengli / Bo Cengli' })
       <p>Kasus yang kamu tulis akan dibaca dan dinilai orang lain. Supaya tetap aman dan enak dibaca:</p>
       <ul>
         <li>Pakai inisial atau A, B, C. Jangan menulis nama lengkap, alamat, nomor HP, akun sosial media, atau data pribadi orang lain.</li>
-        <li>Jangan menyerang, menghina, atau menyudutkan orang tertentu. Jangan memuat SARA, ujaran kebencian, ancaman, atau konten dewasa.</li>
+        <li>Jangan menyerang, menghina, atau menyudutkan orang tertentu. Jangan memuat SARA (suku, agama, ras, antargolongan), politik praktis (partai, pemilu, tokoh politik), ujaran kebencian, ancaman, atau konten dewasa. Kasus yang menyinggung hal-hal itu bisa ditahan untuk dicek dulu, atau ditolak.</li>
         <li>Jangan memasang tautan, iklan, atau promosi.</li>
         <li>Tulis kejadian yang benar-benar kamu alami atau lihat. Jangan mengarang tuduhan tentang orang nyata.</li>
       </ul>
