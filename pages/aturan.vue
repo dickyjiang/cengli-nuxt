@@ -20,7 +20,7 @@ useHead({ title: 'Aturan & Privasi | Cengli / Bo Cengli' })
       <p>Kamu bertanggung jawab atas isi kasus yang kamu kirim. Dengan mengirim, kamu mengizinkan kasus itu ditampilkan di situs ini.</p>
 
       <h2>Privasi</h2>
-      <p>Situs ini tidak memakai akun, iklan, atau pelacak pihak ketiga.</p>
+      <p>Situs ini tidak memakai akun atau iklan. Untuk mengetahui jumlah kunjungan, kami memakai statistik kunjungan dari Cloudflare Web Analytics, yang tidak memakai cookie dan tidak melacak kamu antar situs.</p>
       <h3>Data yang kami simpan</h3>
       <ul>
         <li><strong>Teks kasus</strong> yang kamu kirim, kategorinya, dan waktu pengirimannya.</li>
