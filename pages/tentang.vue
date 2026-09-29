@@ -9,13 +9,19 @@ useHead({ title: 'Tentang | Cengli / Bo Cengli', meta: [{ name: 'description', c
       <p><strong>Cengli / Bo Cengli</strong> adalah game polling santai. Orang menulis kejadian sehari-hari (kasus), lalu pengunjung lain menilai: <strong>Cengli</strong> (adil, wajar) atau <strong>Bo Cengli</strong> (nggak adil).</p>
 
       <h2>Apa arti "cengli"?</h2>
-      <p>Kata <em>cengli</em> ada di Kamus Besar Bahasa Indonesia:</p>
+      <p>Kata <em>cengli</em> tercatat di Kamus Besar Bahasa Indonesia:</p>
       <blockquote>
         <p><strong>cengli</strong> /céngli/ <em>a cak</em></p>
         <p>1. sudah sepatutnya (semestinya); masuk akal</p>
         <p>2. lurus hati; jujur</p>
       </blockquote>
-      <p>Jadi <strong>Cengli</strong> untuk yang dirasa wajar dan adil, dan <strong>Bo Cengli</strong> untuk yang sebaliknya. Sumber: <a href="https://kbbi.web.id/cengli" target="_blank" rel="noopener">kbbi.web.id/cengli</a>.</p>
+      <p>Istilah ini berasal dari bahasa <strong>Hokkien</strong> (Minnan) yang lama dipakai di Indonesia, lalu masuk ke percakapan sehari-hari:</p>
+      <ul>
+        <li><strong>Cengli</strong> (dari <em>情理</em>, <em>chêng-lí</em>): masuk akal, wajar, patut, dan adil.</li>
+        <li><strong>Bo</strong> (dari <em>無</em>, <em>bô</em>): tidak atau tanpa.</li>
+        <li><strong>Bo cengli</strong>: tidak wajar, tidak adil, atau tidak patut.</li>
+      </ul>
+      <p>Jadi di sini <strong>Cengli</strong> untuk kejadian yang menurutmu wajar dan adil, dan <strong>Bo Cengli</strong> untuk yang sebaliknya. Definisi Indonesianya bisa dilihat di <a href="https://kbbi.web.id/cengli" target="_blank" rel="noopener">kbbi.web.id/cengli</a>.</p>
 
       <h2>Cara kerjanya</h2>
       <ul>
