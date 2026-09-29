@@ -1,0 +1,7 @@
+.DS_Store
+.dev.vars
+.nuxt
+.output
+.wrangler
+dist
+node_modules

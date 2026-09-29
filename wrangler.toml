@@ -1,0 +1,10 @@
+name = "cengli"
+compatibility_date = "2025-01-01"
+pages_build_output_dir = "dist"
+
+# Setelah `wrangler d1 create cengli`, ganti database_id dengan id yang muncul.
+[[d1_databases]]
+binding = "DB"
+database_name = "cengli"
+database_id = "GANTI-DENGAN-DATABASE-ID"
+migrations_dir = "migrations"

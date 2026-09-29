@@ -1,0 +1,21 @@
+{
+  "name": "cengli-bo-cengli",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "nuxt dev",
+    "build": "nuxt build",
+    "preview": "wrangler pages dev dist",
+    "db:local": "wrangler d1 migrations apply cengli --local",
+    "db:remote": "wrangler d1 migrations apply cengli --remote",
+    "test:moderation": "node --experimental-strip-types scripts/test-moderation.ts"
+  },
+  "dependencies": {
+    "nuxt": "^3.17.0",
+    "vue": "latest"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20260926.1",
+    "wrangler": "^4.0.0"
+  }
+}
