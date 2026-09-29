@@ -203,8 +203,10 @@ select:focus-visible, input:focus-visible { outline: 3px solid var(--focus); out
 .prose h3 { font-size: 1rem; margin: 0.5rem 0 0; }
 .prose p, .prose ul { margin: 0; }
 .prose ul { padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.375rem; }
-.prose a { color: inherit; text-underline-offset: 0.2em; }
+.prose a:not(.btn) { color: inherit; text-underline-offset: 0.2em; }
 .prose a.btn { text-decoration: none; }
+.prose blockquote { margin: 0; background: var(--bg); border-radius: 1rem; padding: 0.875rem 1rem; }
+.prose blockquote p + p { margin-top: 0.25rem; }
 .prose code { background: var(--bg); border-radius: 0.375rem; padding: 0.0625rem 0.375rem; font-size: 0.875em; }
 .prose .muted { color: var(--muted); font-size: 0.875rem; }
 .site-foot span a { color: inherit; }

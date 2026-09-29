@@ -8,6 +8,15 @@ useHead({ title: 'Tentang | Cengli / Bo Cengli', meta: [{ name: 'description', c
       <h1>Tentang</h1>
       <p><strong>Cengli / Bo Cengli</strong> adalah game polling santai. Orang menulis kejadian sehari-hari (kasus), lalu pengunjung lain menilai: <strong>Cengli</strong> (adil, wajar) atau <strong>Bo Cengli</strong> (nggak adil).</p>
 
+      <h2>Apa arti "cengli"?</h2>
+      <p>Kata <em>cengli</em> ada di Kamus Besar Bahasa Indonesia:</p>
+      <blockquote>
+        <p><strong>cengli</strong> /céngli/ <em>a cak</em></p>
+        <p>1. sudah sepatutnya (semestinya); masuk akal</p>
+        <p>2. lurus hati; jujur</p>
+      </blockquote>
+      <p>Jadi <strong>Cengli</strong> untuk yang dirasa wajar dan adil, dan <strong>Bo Cengli</strong> untuk yang sebaliknya. Sumber: <a href="https://kbbi.web.id/cengli" target="_blank" rel="noopener">kbbi.web.id/cengli</a>.</p>
+
       <h2>Cara kerjanya</h2>
       <ul>
         <li>Buka situs, pilih kasus, lalu vote. Tanpa akun.</li>
