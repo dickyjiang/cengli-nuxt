@@ -57,7 +57,7 @@ async function share() {
   const it = current.value
   if (!it) return
   const url = `${location.origin}/s/${it.id}`
-  const text = 'Menurut kamu, cengli nggak? Vote dulu, baru lihat hasilnya.'
+  const text = 'Cengli atau Bo Cengli? Ikut nilai.'
   try {
     if (navigator.share) { await navigator.share({ title: 'Cengli / Bo Cengli', text, url }); return }
     await navigator.clipboard.writeText(url)

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const site = useRuntimeConfig().public.siteUrl as string
-const desc = 'Kejadian sehari-hari, kamu yang nilai. Cengli atau Bo Cengli?'
+const desc = 'Cengli atau Bo Cengli? Kasus sehari-hari, kamu yang nilai.'
 useHead({
   meta: [
     { property: 'og:type', content: 'website' },
