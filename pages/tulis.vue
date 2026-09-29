@@ -94,6 +94,7 @@ async function submit() {
 
         <p v-if="werr" class="msg err" role="alert">{{ werr }}</p>
         <div v-if="siteKey" ref="tsEl" />
+        <p class="msg">Dengan mengirim, kamu setuju dengan <NuxtLink to="/aturan">Aturan &amp; Privasi</NuxtLink>. Jangan sebut nama asli atau data pribadi orang lain.</p>
         <button type="submit" class="btn btn-primary btn-block" :disabled="sending">{{ sending ? 'Mengirim...' : 'Kirim kasus' }}</button>
         <NuxtLink to="/" class="btn btn-ghost btn-block">Batal</NuxtLink>
       </form>
