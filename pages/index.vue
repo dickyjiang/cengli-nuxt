@@ -13,6 +13,10 @@ const loadErr = ref('')
 const voted = ref(false)
 const leaving = ref(false)
 const shareNote = ref('')
+const started = ref(false)          // desktop: kartu hero dulu, deck setelah "Mulai vote"
+const hot = ref(0)
+const hotItems = computed(() => (first.value?.items ?? []).slice(0, 5))
+onMounted(() => { const t = setInterval(() => { if (hotItems.value.length > 1) hot.value = (hot.value + 1) % hotItems.value.length }, 5000); onBeforeUnmount(() => clearInterval(t)) })
 
 const { data: cats } = await useFetch<{ items: Cat[] }>('/api/categories')
 const { data: first } = await useFetch<Page>('/api/scenarios', { query: { filter: 'new', limit: 10 } })
@@ -37,7 +41,7 @@ async function load(reset: boolean) {
 
 function pickCat(slug: string) {
   if (cat.value === slug) return
-  cat.value = slug; voted.value = false; shareNote.value = ''
+  cat.value = slug; started.value = true; voted.value = false; shareNote.value = ''
   load(true)
 }
 
@@ -77,16 +81,36 @@ function up(e: PointerEvent) {
 </script>
 
 <template>
-  <div class="stack">
+  <div :class="['stack', { started }]">
     <section class="hero">
       <h1>Adil atau nggak?</h1>
       <p>Kamu yang nilai. Vote aja.</p>
     </section>
 
-    <div v-if="cats?.items?.length" class="chips" role="group" aria-label="Kategori">
-      <button type="button" :class="['chip', { on: cat === '' }]" :aria-pressed="cat === ''" @click="pickCat('')">Semua</button>
-      <button v-for="c in cats.items" :key="c.id" type="button" :class="['chip', { on: cat === c.slug }]" :aria-pressed="cat === c.slug" @click="pickCat(c.slug)">{{ c.name }}</button>
+    <div class="filters">
+      <div v-if="hotItems.length" class="ticker">
+        <strong>Hot Topik</strong>
+        <span class="ticker-text">{{ hotItems[hot % hotItems.length].text }}</span>
+      </div>
+      <div v-if="cats?.items?.length" class="chips" role="group" aria-label="Kategori">
+        <button type="button" :class="['chip', { on: cat === '' }]" :aria-pressed="cat === ''" @click="pickCat('')">Semua</button>
+        <button v-for="c in cats.items" :key="c.id" type="button" :class="['chip', { on: cat === c.slug }]" :aria-pressed="cat === c.slug" @click="pickCat(c.slug)">{{ c.name }}</button>
+      </div>
     </div>
+
+    <section class="hero-card">
+      <div class="thumbs" aria-hidden="true">
+        <span class="thumb fair"><svg viewBox="0 0 24 24"><path d="M2 10h4v11H2zM8 21h9.4a2 2 0 0 0 2-1.6l1.4-7A2 2 0 0 0 18.8 10H14l.7-3.4a1.5 1.5 0 0 0-.4-1.4L13.5 3 8 10z" fill="#fff" stroke="#000" stroke-width="1.4" stroke-linejoin="round" /></svg></span>
+        <span class="thumb unfair"><svg viewBox="0 0 24 24" style="transform:rotate(180deg)"><path d="M2 10h4v11H2zM8 21h9.4a2 2 0 0 0 2-1.6l1.4-7A2 2 0 0 0 18.8 10H14l.7-3.4a1.5 1.5 0 0 0-.4-1.4L13.5 3 8 10z" fill="#fff" stroke="#000" stroke-width="1.4" stroke-linejoin="round" /></svg></span>
+      </div>
+      <h2>Cengli - Bo Cengli?</h2>
+      <p class="sub">Adil atau nggak?</p>
+      <div class="row" style="justify-content:center;gap:.75rem">
+        <button type="button" class="btn btn-ghost" @click="started = true">Mulai vote</button>
+        <NuxtLink to="/tulis" class="btn btn-primary">Tulis kasus baru</NuxtLink>
+      </div>
+      <p class="note">Tanpa akun. Satu orang satu suara per kasus.</p>
+    </section>
 
     <div v-if="current" class="deck" @pointerdown="down" @pointerup="up" @pointercancel="tracking = false">
       <ScenarioCard :key="current.id" :item="current" :class="{ leaving }" @skip="advance" @voted="onVoted" />

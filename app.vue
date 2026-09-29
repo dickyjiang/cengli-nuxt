@@ -14,12 +14,22 @@ useHead({
     { name: 'twitter:image', content: `${site}/og.png` }
   ]
 })
+const open = ref(false)
+watch(() => useRoute().fullPath, () => { open.value = false })
 </script>
 
 <template>
   <main class="wrap">
     <header class="top">
       <NuxtLink to="/" class="logo" aria-label="CLBCL, ke beranda"><span class="f">CL</span><span class="u">BCL</span></NuxtLink>
+      <span class="top-title" aria-hidden="true">Adil atau nggak?</span>
+      <div class="menu">
+        <button type="button" class="menu-btn" aria-label="Menu" :aria-expanded="open" @click="open = !open"><i /><i /><i /></button>
+        <div v-if="open" class="menu-pop">
+          <NuxtLink to="/">Beranda</NuxtLink>
+          <NuxtLink to="/tulis">Tulis kasus baru</NuxtLink>
+        </div>
+      </div>
     </header>
     <NuxtPage />
   </main>
