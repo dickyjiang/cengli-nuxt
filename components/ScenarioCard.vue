@@ -1,7 +1,7 @@
 <script setup lang="ts">
 type Choice = 'fair' | 'unfair'
 type Counts = Record<Choice, number>
-interface Item { id: number; text: string; createdAt: number; my: Choice | null; counts: Counts | null }
+interface Item { id: number; text: string; createdAt: number; my: Choice | null; counts: Counts | null; mine?: boolean }
 
 const props = defineProps<{ item: Item }>()
 const emit = defineEmits<{ skip: [id: number]; voted: [id: number] }>()
@@ -20,6 +20,8 @@ const err = ref('')
 const animate = ref(false)
 const shareNote = ref('')
 
+// Penulis melihat hasil kasusnya sendiri tanpa perlu vote.
+const showing = computed(() => !!my.value || (!!props.item.mine && !!counts.value))
 const total = computed(() => (counts.value ? counts.value.fair + counts.value.unfair : 0))
 
 // Largest remainder, supaya ketiga angka selalu berjumlah 100.
@@ -111,14 +113,14 @@ async function share() {
   } catch { /* dibatalkan */ }
 }
 
-defineExpose({ my, total, busy, refresh })
+defineExpose({ my, showing, total, busy, refresh })
 </script>
 
 <template>
   <article class="card">
     <p class="story">{{ item.text }}</p>
 
-    <template v-if="!my">
+    <template v-if="!showing">
       <div class="votes">
         <button v-for="c in CHOICES" :key="c.key" type="button" :class="['btn', 'vote', c.key]" :disabled="busy" @click="vote(c.key, $event)">
           <img :src="c.key === 'unfair' ? '/thumbdown.svg' : '/thumbup.svg'" alt="" aria-hidden="true" width="34" height="40">

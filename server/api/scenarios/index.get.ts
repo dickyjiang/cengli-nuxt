@@ -17,12 +17,12 @@ export default defineEventHandler(async (event) => {
        FROM scenarios s
        LEFT JOIN votes v ON v.scenario_id = s.id AND v.voter_id = ?
        LEFT JOIN categories c ON c.id = s.category_id
-       WHERE s.status = 'published' AND s.id < ? AND ${voteCond}
+       WHERE s.status = 'published' AND s.author_id <> ? AND s.id < ? AND ${voteCond}
          ${catSlug ? "AND c.status = 'published' AND c.slug = ?" : ''}
        ORDER BY s.id DESC
        LIMIT ?`
     )
-    .bind(...(catSlug ? [voterId, before, catSlug, limit + 1] : [voterId, before, limit + 1]))
+    .bind(...(catSlug ? [voterId, voterId, before, catSlug, limit + 1] : [voterId, voterId, before, limit + 1]))
     .all<{ id: number; text: string; createdAt: number; my: Choice | null; category: string }>()
 
   const hasMore = results.length > limit

@@ -28,6 +28,7 @@ watch(() => useRoute().fullPath, () => { open.value = false })
         <button type="button" class="menu-btn" aria-label="Menu" :aria-expanded="open" @click="open = !open"><i /><i /><i /></button>
         <div v-if="open" class="menu-pop">
           <NuxtLink to="/">Beranda</NuxtLink>
+          <NuxtLink to="/riwayat">Riwayatku</NuxtLink>
           <NuxtLink to="/tulis">Tulis kasus baru</NuxtLink>
         </div>
       </div>
