@@ -19,6 +19,7 @@ watch(() => useRoute().fullPath, () => { open.value = false })
 </script>
 
 <template>
+  <div class="shell">
   <main class="wrap">
     <header class="top">
       <NuxtLink to="/" class="logo" aria-label="CLBCL, ke beranda"><span class="f">CL</span><span class="u">BCL</span></NuxtLink>
@@ -32,9 +33,10 @@ watch(() => useRoute().fullPath, () => { open.value = false })
       </div>
     </header>
     <NuxtPage />
-    <footer class="site-foot">
-      <span>© 2026 cenglibocengli · <span class="beta">v0.1</span></span>
-      <span>SIDIKKI · <a href="mailto:hello@dickyjiang.com">hello@dickyjiang.com</a></span>
-    </footer>
   </main>
+  <footer class="site-foot">
+    <span>© 2026 cenglibocengli · v0.1</span>
+    <a href="mailto:hello@dickyjiang.com">hello@dickyjiang.com</a>
+  </footer>
+  </div>
 </template>

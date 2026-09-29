@@ -163,10 +163,10 @@ select:focus-visible, input:focus-visible { outline: 3px solid var(--focus); out
   .deck::before, .deck::after { background: #E3E4DE; }
 }
 
-/* footer standar di dasar halaman */
-.wrap { min-height: 100vh; min-height: 100dvh; }
-.wrap > .site-foot { margin-top: auto; max-width: none; width: 100%; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.25rem 1rem; padding-top: 1.5rem; font-size: 0.75rem; color: var(--muted); }
+/* footer: bilah gelap selebar layar di dasar halaman (Figma "footer") */
+.shell { min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column; }
+.shell > .wrap { flex: 1 0 auto; width: 100%; }
+.site-foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0.25rem 1rem; min-height: 3.25rem; padding: 0.5rem clamp(1rem, 7.1vw, 6.375rem); background: #141510; color: #86887E; font-size: 0.875rem; }
 .site-foot a { color: inherit; text-underline-offset: 0.2em; }
-.site-foot .beta { font-weight: 600; color: var(--fg); }
-.site-foot > span:last-child { margin-left: auto; text-align: right; }
+.site-foot a:hover { color: #fff; }
 @media (max-width: 767px) { .top-title { display: none; } }
