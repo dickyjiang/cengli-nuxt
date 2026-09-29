@@ -8,6 +8,8 @@ export default defineNuxtConfig({
   runtimeConfig: {
     // Kosongkan di dev supaya Turnstile dilewati. Isi di production (NUXT_TURNSTILE_SECRET).
     turnstileSecret: '',
+    // Token halaman /admin (NUXT_ADMIN_TOKEN, minimal 16 karakter acak).
+    adminToken: '',
     public: {
       turnstileSiteKey: ''
     }
