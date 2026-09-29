@@ -37,7 +37,7 @@ export default defineEventHandler(async (event) => {
       categoryName = existing.status === 'published' ? existing.name : 'Lainnya'
     } else {
       const made = await db.prepare('SELECT COUNT(*) AS n FROM categories WHERE created_by = ? AND created_at > ?').bind(voterId, now2 - 24 * 60 * 60 * 1000).first<{ n: number }>()
-      if ((made?.n ?? 0) >= 2) throw createError({ statusCode: 429, statusMessage: 'Batas kategori baru hari ini sudah tercapai. Pilih dari daftar dulu ya.' })
+      if ((made?.n ?? 0) >= 5) throw createError({ statusCode: 429, statusMessage: 'Batas kategori baru hari ini sudah tercapai. Pilih dari daftar dulu ya.' })
       const row = await db.prepare("INSERT INTO categories (name, slug, status, sort, created_by, created_at) VALUES (?, ?, 'pending', 500, ?, ?) RETURNING id").bind(c.name, c.slug, voterId, now2).first<{ id: number }>()
       categoryId = row!.id
     }
