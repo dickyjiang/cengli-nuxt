@@ -50,9 +50,9 @@ async function submit() {
   if (choice.value === '__new') body.newCategory = newName.value
   else if (choice.value) body.categoryId = Number(choice.value)
   try {
-    const r = await $fetch<{ status: string }>('/api/scenarios', { method: 'POST', body })
+    const r = await $fetch<{ id: number; status: string }>('/api/scenarios', { method: 'POST', body })
     done.value = r.status === 'published' ? 'published' : 'pending'
-    if (r.status === 'published') await navigateTo('/')
+    if (r.status === 'published') await navigateTo(`/s/${r.id}`)
   } catch (e) {
     const m = e as { statusMessage?: string; data?: { statusMessage?: string } }
     werr.value = m?.data?.statusMessage || m?.statusMessage || 'Gagal mengirim. Coba lagi sebentar.'
@@ -67,7 +67,8 @@ async function submit() {
     <section v-if="done === 'pending'" class="card" role="status">
       <h2>Terkirim</h2>
       <p class="msg">Kasusmu menunggu persetujuan sebelum tayang.</p>
-      <NuxtLink to="/" class="btn btn-primary">Kembali</NuxtLink>
+      <NuxtLink to="/riwayat" class="btn btn-primary">Lihat di Riwayatku</NuxtLink>
+      <NuxtLink to="/" class="btn btn-ghost">Kembali</NuxtLink>
     </section>
 
     <section v-else class="card" aria-labelledby="w-title">
