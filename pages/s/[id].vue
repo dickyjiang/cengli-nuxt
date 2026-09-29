@@ -3,7 +3,7 @@ const route = useRoute()
 const { data: item, error } = await useFetch(`/api/scenarios/${route.params.id}`)
 const cardRef = ref<{ showing: boolean; my: unknown; total: number; busy: boolean; refresh: () => void } | null>(null)
 const { dragging, cardStyle, progress, fling, handlers } = useSwipeCard(() => { navigateTo('/'); return false })
-useHead({ title: 'Cengli / Bo Cengli: menurut kamu adil?' })
+useHead({ title: 'Cengli / Bo Cengli: menurut kamu adil?', meta: [{ name: 'robots', content: 'noindex' }] })
 </script>
 
 <template>

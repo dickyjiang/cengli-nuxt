@@ -1,5 +1,6 @@
 <script setup lang="ts">
 interface Cat { id: number; name: string; slug: string }
+useHead({ title: 'Tulis kasus | Cengli / Bo Cengli', meta: [{ name: 'robots', content: 'noindex' }] })
 const config = useRuntimeConfig()
 const siteKey = config.public.turnstileSiteKey as string
 

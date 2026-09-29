@@ -66,7 +66,8 @@ function hits(normalized: string, list: string[]): string | null {
   return null
 }
 
-const URL_RE = /https?:\/\/|www\.|\b[a-z0-9-]+\.(com|net|org|id|co|io|me|link|xyz)\b/i
+const TLDS = 'com|net|org|id|co|io|me|link|xyz|ly|ee|gl|gd|app|dev|site|online|shop|store|tv|cc|us|sg|my|biz|info|to|gg|cx|page|click|top|vip'
+const URL_RE = new RegExp(`https?:\\/\\/|www\\.|\\b[a-z0-9-]+\\.(${TLDS})\\b|\\b(dot|titik)\\s*(com|co|id|net|org)\\b`, 'i')
 const PHONE_RE = /(\d[\s.\-]?){8,}/
 const HANDLE_RE = /@\w{3,}/
 const EMAIL_RE = /[\w.+-]+@[\w-]+\.[\w.]+/

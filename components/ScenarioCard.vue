@@ -40,9 +40,13 @@ const pct = computed<Record<Choice, number>>(() => {
   return out
 })
 
+// Di bawah MIN_VOTES suara, hasil belum layak disebut "mayoritas".
+const MIN_VOTES = 5
 const verdict = computed(() => {
   const c = counts.value
-  if (!c || !total.value) return { text: '', cls: '' }
+  if (!c) return { text: '', cls: '' }
+  if (!total.value) return { text: 'Belum ada suara', cls: 'tie' }
+  if (total.value < MIN_VOTES) return { text: `Baru ${total.value} suara`, cls: 'tie' }
   const top = [...ORDER].sort((a, b) => c[b] - c[a])
   if (c[top[0]] === c[top[1]]) return { text: 'Suara imbang', cls: 'tie' }
   return { text: `Mayoritas: ${LABELS[top[0]]}`, cls: top[0] }

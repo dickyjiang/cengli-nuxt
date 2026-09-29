@@ -10,6 +10,11 @@ const cases: [string, string][] = [
   ['Cerita lengkap ada di https://contoh.com/abc ya semuanya', 'reject'],
   ['Follow @budisantoso buat lihat kelanjutan cerita ini ya', 'reject'],
   ['Si A bilang B tolol di depan semua orang kantor kemarin', 'pending'],
+  ['Cerita lengkap bisa dilihat di bit.ly/abcd123 ya semuanya', 'reject'],
+  ['Lihat kelanjutannya di linktr.ee/orangitu ya teman teman', 'reject'],
+  ['Cek di warung titik com buat cerita lengkapnya ya semua', 'reject'],
+  ['Aku kesal banget hari ini, temen kantor malah ketawa sama bos', 'ok'],
+  ['Banjir di depan rumah bikin temen telat, bos tetap marah ke dia', 'ok'],
   ['terlalu pendek', 'reject']
 ]
 let fail = 0

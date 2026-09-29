@@ -213,3 +213,9 @@ select:focus-visible, input:focus-visible { outline: 3px solid var(--focus); out
 
 /* Kotak Turnstile (hanya terlihat kalau Cloudflare meminta interaksi) */
 .human-box { position: fixed; left: 50%; bottom: 1rem; transform: translateX(-50%); z-index: 60; }
+
+/* Riwayat: hapus kasus sendiri */
+.hist li { position: relative; }
+.hist-del { position: absolute; top: 0.5rem; right: 0.5rem; font: inherit; font-size: 0.75rem; font-weight: 700; color: var(--unfair); background: var(--surface); border: 1.5px solid var(--unfair); border-radius: 999px; padding: 0.125rem 0.625rem; min-height: 1.75rem; cursor: pointer; }
+.hist-confirm { position: absolute; inset: 0; z-index: 2; display: flex; flex-direction: column; justify-content: center; gap: 0.5rem; padding: 0.75rem; background: var(--surface); border: 2px solid #000; border-radius: 1rem; }
+.hist-confirm p { margin: 0; font-size: 0.8125rem; line-height: 1.4; }

@@ -3,7 +3,7 @@ type Choice = 'fair' | 'unfair'
 interface Row { id: number; text: string; status: string; createdAt: number; my: Choice | null; category: string; counts: Record<Choice, number> }
 interface Page { items: Row[]; nextBefore: number | null }
 
-useHead({ title: 'Riwayatku | Cengli / Bo Cengli' })
+useHead({ title: 'Riwayatku | Cengli / Bo Cengli', meta: [{ name: 'robots', content: 'noindex' }] })
 
 const tab = ref<'voted' | 'mine'>('voted')
 const items = ref<Row[]>([])
@@ -11,6 +11,8 @@ const nextBefore = ref<number | null>(null)
 const loading = ref(false)
 const loaded = ref(false)
 const err = ref('')
+const confirmId = ref<number | null>(null)
+const deleting = ref(false)
 
 async function load(reset: boolean) {
   if (loading.value) return
@@ -21,6 +23,16 @@ async function load(reset: boolean) {
     nextBefore.value = page.nextBefore
   } catch { err.value = 'Riwayat belum bisa dimuat. Coba lagi.' }
   loading.value = false; loaded.value = true
+}
+async function remove(id: number) {
+  if (deleting.value) return
+  deleting.value = true; err.value = ''
+  try {
+    await $fetch(`/api/scenarios/${id}`, { method: 'DELETE' })
+    items.value = items.value.filter(r => r.id !== id)
+    confirmId.value = null
+  } catch { err.value = 'Kasus belum bisa dihapus. Coba lagi.' }
+  deleting.value = false
 }
 function pick(t: 'voted' | 'mine') { if (tab.value === t) return; tab.value = t; items.value = []; nextBefore.value = null; loaded.value = false; load(true) }
 onMounted(() => load(true))
@@ -59,6 +71,16 @@ function leader(r: Row) {
           </div>
           <p class="hist-foot"><span>{{ leader(r) }}</span><span>{{ total(r) }} suara</span></p>
         </NuxtLink>
+        <template v-if="tab === 'mine'">
+          <button v-if="confirmId !== r.id" type="button" class="hist-del" :aria-label="`Hapus kasus ${r.id}`" @click="confirmId = r.id">Hapus</button>
+          <div v-else class="hist-confirm" role="alertdialog" aria-label="Konfirmasi hapus">
+            <p>Hapus kasus ini? Suaranya ikut terhapus dan tidak bisa dikembalikan.</p>
+            <div class="row">
+              <button type="button" class="btn btn-primary btn-small" :disabled="deleting" @click="remove(r.id)">Ya, hapus</button>
+              <button type="button" class="btn btn-ghost btn-small" :disabled="deleting" @click="confirmId = null">Batal</button>
+            </div>
+          </div>
+        </template>
       </li>
     </ul>
 

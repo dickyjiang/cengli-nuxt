@@ -5,6 +5,16 @@ export default defineNuxtConfig({
   nitro: {
     preset: 'cloudflare-pages'
   },
+  routeRules: {
+    '/**': {
+      headers: {
+        'X-Content-Type-Options': 'nosniff',
+        'Referrer-Policy': 'strict-origin-when-cross-origin',
+        'X-Frame-Options': 'DENY',
+        'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=()'
+      }
+    }
+  },
   runtimeConfig: {
     // Kosongkan di dev supaya Turnstile dilewati. Isi di production (NUXT_TURNSTILE_SECRET).
     turnstileSecret: '',
