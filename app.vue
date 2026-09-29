@@ -14,6 +14,10 @@ useHead({
     { name: 'twitter:image', content: `${site}/og.png` }
   ]
 })
+const siteKey = useRuntimeConfig().public.turnstileSiteKey as string
+if (siteKey) useHead({ script: [{ key: 'turnstile', src: 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit', async: true, defer: true }] })
+const { ensure: ensureHuman } = useHuman()
+onMounted(() => { ensureHuman().catch(() => { /* akan diulang saat vote */ }) })
 const open = ref(false)
 watch(() => useRoute().fullPath, () => { open.value = false })
 </script>

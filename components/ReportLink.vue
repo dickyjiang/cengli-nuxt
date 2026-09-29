@@ -1,10 +1,15 @@
 <script setup lang="ts">
 const props = defineProps<{ id: number }>()
 const step = ref<'idle' | 'ask' | 'done'>('idle')
-const err = ref(false)
+const err = ref('')
+const { guarded } = useHuman()
 async function send() {
-  err.value = false
-  try { await $fetch(`/api/scenarios/${props.id}/report`, { method: 'POST' }); step.value = 'done' } catch { err.value = true; step.value = 'idle' }
+  err.value = ''
+  try { await guarded(() => $fetch(`/api/scenarios/${props.id}/report`, { method: 'POST' })); step.value = 'done' } catch (e) {
+    const m = e as { statusMessage?: string; data?: { statusMessage?: string } }
+    err.value = m?.data?.statusMessage || m?.statusMessage || 'Belum terkirim. Coba lagi.'
+    step.value = 'idle'
+  }
 }
 </script>
 
@@ -18,7 +23,7 @@ async function send() {
     </template>
     <template v-else>
       <button type="button" class="linkish" @click="step = 'ask'">Laporkan kasus ini</button>
-      <span v-if="err">Belum terkirim. Coba lagi.</span>
+      <span v-if="err">{{ err }}</span>
     </template>
   </div>
 </template>

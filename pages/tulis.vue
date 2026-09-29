@@ -2,7 +2,6 @@
 interface Cat { id: number; name: string; slug: string }
 const config = useRuntimeConfig()
 const siteKey = config.public.turnstileSiteKey as string
-if (siteKey) useHead({ script: [{ src: 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit', async: true, defer: true }] })
 
 // Turnstile: render eksplisit (aman untuk navigasi SPA) dan reset setelah tiap percobaan, karena token hanya berlaku sekali.
 interface TurnstileApi { render: (el: HTMLElement, o: Record<string, unknown>) => string; reset: (id?: string) => void }

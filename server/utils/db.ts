@@ -32,7 +32,7 @@ export async function countsFor(db: D1Database, ids: number[]): Promise<Map<numb
 
 export async function verifyTurnstile(event: H3Event, token: string | undefined): Promise<boolean> {
   const secret = useRuntimeConfig(event).turnstileSecret
-  if (!secret) return true // dev: dilewati
+  if (!secret) return !!import.meta.dev // dev: dilewati; produksi tanpa secret: ditolak
   if (!token) return false
   const body = new URLSearchParams({ secret, response: token })
   const ip = getRequestHeader(event, 'cf-connecting-ip')

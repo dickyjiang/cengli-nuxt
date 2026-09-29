@@ -210,3 +210,6 @@ select:focus-visible, input:focus-visible { outline: 3px solid var(--focus); out
 .prose code { background: var(--bg); border-radius: 0.375rem; padding: 0.0625rem 0.375rem; font-size: 0.875em; }
 .prose .muted { color: var(--muted); font-size: 0.875rem; }
 .site-foot span a { color: inherit; }
+
+/* Kotak Turnstile (hanya terlihat kalau Cloudflare meminta interaksi) */
+.human-box { position: fixed; left: 50%; bottom: 1rem; transform: translateX(-50%); z-index: 60; }

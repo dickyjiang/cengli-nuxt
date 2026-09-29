@@ -75,12 +75,13 @@ onMounted(() => { if (counts.value) countUp() })
 onBeforeUnmount(() => cancelAnimationFrame(raf))
 
 const { fire } = useConfetti()
+const { guarded } = useHuman()
 async function vote(choice: Choice, ev?: MouseEvent) {
   const rect = (ev?.currentTarget as HTMLElement | null)?.getBoundingClientRect()
   if (busy.value) return
   busy.value = true; err.value = ''
   try {
-    const r = await $fetch<{ my: Choice; counts: Counts }>(`/api/scenarios/${props.item.id}/vote`, { method: 'POST', body: { choice } })
+    const r = await guarded(() => $fetch<{ my: Choice; counts: Counts }>(`/api/scenarios/${props.item.id}/vote`, { method: 'POST', body: { choice } }))
     animate.value = true
     my.value = r.my; counts.value = r.counts
     emit('voted', props.item.id)
