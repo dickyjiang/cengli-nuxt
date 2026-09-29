@@ -1,5 +1,5 @@
 // POST /api/scenarios  { text, categoryId? | newCategory?, turnstileToken }
-const MAX_PER_HOUR = 3
+const MAX_PER_HOUR = 10
 
 export default defineEventHandler(async (event) => {
   const db = useDB(event)
