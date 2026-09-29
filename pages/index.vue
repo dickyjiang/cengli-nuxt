@@ -116,7 +116,7 @@ async function share() {
       <p class="swipe-hint">Geser kartu untuk kasus lainnya</p>
       <div class="row" style="justify-content: center; gap: 0.75rem">
         <button type="button" class="btn btn-ghost" @click="advance">Berikutnya</button>
-        <button type="button" class="btn btn-primary" @click="share">Bagikan hasil</button>
+        <button type="button" class="btn btn-primary" @click="share">Share ke teman</button>
       </div>
       <p v-if="shareNote" class="msg" role="status">{{ shareNote }}</p>
     </div>
