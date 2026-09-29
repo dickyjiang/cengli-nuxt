@@ -12,7 +12,7 @@ export default defineNuxtConfig({
     adminToken: '',
     public: {
       // Alamat situs untuk gambar OG (NUXT_PUBLIC_SITE_URL). Ganti saat pakai domain sendiri.
-      siteUrl: 'https://cengli-nuxt.pages.dev',
+      siteUrl: 'https://cengli.men',
       turnstileSiteKey: ''
     }
   },
