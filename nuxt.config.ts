@@ -11,6 +11,8 @@ export default defineNuxtConfig({
     // Token halaman /admin (NUXT_ADMIN_TOKEN, minimal 16 karakter acak).
     adminToken: '',
     public: {
+      // Alamat situs untuk gambar OG (NUXT_PUBLIC_SITE_URL). Ganti saat pakai domain sendiri.
+      siteUrl: 'https://cengli-nuxt.pages.dev',
       turnstileSiteKey: ''
     }
   },
