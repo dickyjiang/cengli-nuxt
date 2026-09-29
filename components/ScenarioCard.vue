@@ -51,6 +51,27 @@ function apiMessage(e: unknown, fallback: string) {
   return m?.data?.statusMessage || m?.statusMessage || fallback
 }
 
+// Angka persen menghitung naik dari 0 (atau dari nilai sebelumnya) ke hasil.
+const shown = ref<Record<Choice, number>>({ fair: 0, unfair: 0 })
+let raf = 0
+function countUp() {
+  if (!import.meta.client) return
+  cancelAnimationFrame(raf)
+  const to = { ...pct.value }
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { shown.value = to; return }
+  const from = { ...shown.value }
+  const t0 = performance.now(), D = 900
+  const step = (now: number) => {
+    const k = Math.min(1, (now - t0) / D), e = 1 - Math.pow(1 - k, 3)
+    shown.value = { fair: Math.round(from.fair + (to.fair - from.fair) * e), unfair: Math.round(from.unfair + (to.unfair - from.unfair) * e) }
+    if (k < 1) raf = requestAnimationFrame(step)
+  }
+  raf = requestAnimationFrame(step)
+}
+watch(pct, countUp)
+onMounted(() => { if (counts.value) countUp() })
+onBeforeUnmount(() => cancelAnimationFrame(raf))
+
 async function vote(choice: Choice) {
   if (busy.value) return
   busy.value = true; err.value = ''
@@ -109,7 +130,7 @@ defineExpose({ my, total, busy, refresh })
       <div class="split-head">
         <div v-for="(k, i) in ORDER" :key="k" :class="['side', k, { r: i === 1 }]">
           <span>{{ LABELS[k] }}</span>
-          <span class="pct">{{ pct[k] }}%</span>
+          <span class="pct">{{ shown[k] }}%</span>
           <span v-if="k === my" class="you">Pilihanmu</span>
         </div>
       </div>
