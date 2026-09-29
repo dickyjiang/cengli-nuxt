@@ -2,7 +2,36 @@
 interface Cat { id: number; name: string; slug: string }
 const config = useRuntimeConfig()
 const siteKey = config.public.turnstileSiteKey as string
-if (siteKey) useHead({ script: [{ src: 'https://challenges.cloudflare.com/turnstile/v0/api.js', async: true, defer: true }] })
+if (siteKey) useHead({ script: [{ src: 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit', async: true, defer: true }] })
+
+// Turnstile: render eksplisit (aman untuk navigasi SPA) dan reset setelah tiap percobaan, karena token hanya berlaku sekali.
+interface TurnstileApi { render: (el: HTMLElement, o: Record<string, unknown>) => string; reset: (id?: string) => void }
+const tsEl = ref<HTMLElement | null>(null)
+const tsToken = ref('')
+let tsId: string | undefined
+let poll: ReturnType<typeof setInterval> | undefined
+onBeforeUnmount(() => clearInterval(poll))
+onMounted(() => {
+  if (!siteKey) return
+  let tries = 0
+  const t = poll = setInterval(() => {
+    const api = (window as unknown as { turnstile?: TurnstileApi }).turnstile
+    if (api && tsEl.value) {
+      clearInterval(t)
+      tsId = api.render(tsEl.value, {
+        sitekey: siteKey,
+        callback: (tok: string) => { tsToken.value = tok },
+        'expired-callback': () => { tsToken.value = '' },
+        'error-callback': () => { tsToken.value = '' }
+      })
+    } else if (++tries > 100) clearInterval(t)
+  }, 100)
+})
+function resetTurnstile() {
+  tsToken.value = ''
+  const api = (window as unknown as { turnstile?: TurnstileApi }).turnstile
+  if (api && tsId) api.reset(tsId)
+}
 
 const { data: cats } = await useFetch<{ items: Cat[] }>('/api/categories')
 const text = ref('')
@@ -15,7 +44,8 @@ const done = ref<'' | 'published' | 'pending'>('')
 async function submit() {
   if (sending.value) return
   werr.value = ''; sending.value = true
-  const token = (document.querySelector('[name="cf-turnstile-response"]') as HTMLInputElement | null)?.value
+  const token = tsToken.value
+  if (siteKey && !token) { werr.value = 'Tunggu verifikasi anti-bot selesai, lalu kirim lagi.'; sending.value = false; return }
   const body: Record<string, unknown> = { text: text.value, turnstileToken: token }
   if (choice.value === '__new') body.newCategory = newName.value
   else if (choice.value) body.categoryId = Number(choice.value)
@@ -27,6 +57,7 @@ async function submit() {
     const m = e as { statusMessage?: string; data?: { statusMessage?: string } }
     werr.value = m?.data?.statusMessage || m?.statusMessage || 'Gagal mengirim. Coba lagi sebentar.'
   }
+  if (siteKey && done.value !== 'published') resetTurnstile()
   sending.value = false
 }
 </script>
@@ -62,7 +93,7 @@ async function submit() {
         </div>
 
         <p v-if="werr" class="msg err" role="alert">{{ werr }}</p>
-        <div v-if="siteKey" class="cf-turnstile" :data-sitekey="siteKey" />
+        <div v-if="siteKey" ref="tsEl" />
         <button type="submit" class="btn btn-primary btn-block" :disabled="sending">{{ sending ? 'Mengirim...' : 'Kirim kasus' }}</button>
         <NuxtLink to="/" class="btn btn-ghost btn-block">Batal</NuxtLink>
       </form>
