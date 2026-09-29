@@ -11,7 +11,7 @@ const idx = ref(0)
 const loading = ref(false)
 const loadErr = ref('')
 const voted = ref(false)
-const shareNote = ref('')
+const cardRef = ref<{ my: unknown; total: number; busy: boolean; refresh: () => void } | null>(null)
 const started = ref(false)          // desktop: kartu hero dulu, deck setelah "Mulai vote"
 const hot = ref(0)
 const hotItems = computed(() => (first.value?.items ?? []).slice(0, 5))
@@ -40,32 +40,20 @@ async function load(reset: boolean) {
 
 function pickCat(slug: string) {
   if (cat.value === slug) return
-  cat.value = slug; started.value = true; voted.value = false; shareNote.value = ''
+  cat.value = slug; started.value = true; voted.value = false
   load(true)
 }
 
 function goNext() {
   if (!current.value) return
   idx.value++
-  voted.value = false; shareNote.value = ''
+  voted.value = false
   if (items.value.length - idx.value < 3 && nextBefore.value) load(false)
 }
 const { dragging, cardStyle, progress, fling, handlers } = useSwipeCard(() => { goNext() })
 function advance() { if (current.value) fling(-1) }
 
 function onVoted() { voted.value = true }
-
-async function share() {
-  const it = current.value
-  if (!it) return
-  const url = `${location.origin}/s/${it.id}`
-  const text = 'Cengli atau Bo Cengli? Ikut nilai.'
-  try {
-    if (navigator.share) { await navigator.share({ title: 'Cengli / Bo Cengli', text, url }); return }
-    await navigator.clipboard.writeText(url)
-    shareNote.value = 'Link disalin.'
-  } catch { /* dibatalkan */ }
-}
 
 </script>
 
@@ -102,7 +90,7 @@ async function share() {
     </section>
 
     <div v-if="current" :class="['deck', { dragging }]" :style="{ '--p': progress }" v-bind="handlers">
-      <ScenarioCard :key="current.id" :item="current" :class="{ dragging }" :style="cardStyle" @skip="advance" @voted="onVoted" />
+      <ScenarioCard ref="cardRef" :key="current.id" :item="current" :class="{ dragging }" :style="cardStyle" @skip="advance" @voted="onVoted" />
     </div>
 
     <div v-else-if="!loading" class="card">
@@ -113,12 +101,9 @@ async function share() {
     <p v-if="loadErr" class="msg err" role="alert">{{ loadErr }}</p>
 
     <div v-if="voted" class="after">
+      <ResultMeta v-if="cardRef" :total="cardRef.total" :busy="cardRef.busy" @refresh="cardRef.refresh()" />
       <p class="swipe-hint">Geser kartu untuk kasus lainnya</p>
-      <div class="row" style="justify-content: center; gap: 0.75rem">
-        <button type="button" class="btn btn-ghost" @click="advance">Berikutnya</button>
-        <button type="button" class="btn btn-primary" @click="share">Share ke teman</button>
-      </div>
-      <p v-if="shareNote" class="msg" role="status">{{ shareNote }}</p>
+      <button type="button" class="btn btn-ghost" @click="advance">Berikutnya</button>
     </div>
     <div v-else class="bottom">
       <NuxtLink to="/tulis" class="btn btn-ghost">+ Tambah Kasus Baru</NuxtLink>

@@ -170,3 +170,9 @@ select:focus-visible, input:focus-visible { outline: 3px solid var(--focus); out
 .site-foot a { color: inherit; text-underline-offset: 0.2em; }
 .site-foot a:hover { color: #fff; }
 @media (max-width: 767px) { .top-title { display: none; } }
+
+.share-row { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
+.share-row .btn { width: 100%; gap: 0.5rem; }
+.ico { width: 1.125rem; height: 1.125rem; background: currentColor; -webkit-mask: url("/share.svg") center / contain no-repeat; mask: url("/share.svg") center / contain no-repeat; }
+.result-meta { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.25rem 0.75rem; font-size: 0.875rem; color: var(--muted); }
+.result-meta .linkish { align-self: center; min-height: 2.75rem; }

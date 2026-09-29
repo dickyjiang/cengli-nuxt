@@ -18,6 +18,7 @@ const counts = ref<Counts | null>(props.item.counts)
 const busy = ref(false)
 const err = ref('')
 const animate = ref(false)
+const shareNote = ref('')
 
 const total = computed(() => (counts.value ? counts.value.fair + counts.value.unfair : 0))
 
@@ -73,6 +74,18 @@ async function refresh() {
   busy.value = false
 }
 
+
+async function share() {
+  const url = `${location.origin}/s/${props.item.id}`
+  try {
+    if (navigator.share) { await navigator.share({ title: 'Cengli / Bo Cengli', text: 'Cengli atau Bo Cengli? Ikut nilai.', url }); return }
+    await navigator.clipboard.writeText(url)
+    shareNote.value = 'Link disalin.'
+    setTimeout(() => { shareNote.value = '' }, 2500)
+  } catch { /* dibatalkan */ }
+}
+
+defineExpose({ my, total, busy, refresh })
 </script>
 
 <template>
@@ -104,9 +117,9 @@ async function refresh() {
         <div v-for="k in ORDER" :key="k" :class="['seg', k]" :style="{ width: pct[k] + '%' }" />
       </div>
       <div class="split-foot"><span>{{ counts.fair }} suara</span><span>{{ counts.unfair }} suara</span></div>
-      <div class="foot">
-        <p class="total">{{ total === 1 ? 'Baru kamu yang vote.' : `${total} orang sudah vote.` }}</p>
-        <button type="button" class="btn btn-ghost btn-small" :disabled="busy" @click="refresh">{{ busy ? 'Memuat...' : 'Refresh hasil' }}</button>
+      <div class="share-row">
+        <button type="button" class="btn btn-primary" @click="share"><span class="ico" aria-hidden="true" />Share ke teman</button>
+        <p v-if="shareNote" class="msg" role="status">{{ shareNote }}</p>
       </div>
     </template>
 
