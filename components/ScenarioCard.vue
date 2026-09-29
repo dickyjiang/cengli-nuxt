@@ -72,7 +72,9 @@ watch(pct, countUp)
 onMounted(() => { if (counts.value) countUp() })
 onBeforeUnmount(() => cancelAnimationFrame(raf))
 
-async function vote(choice: Choice) {
+const { fire } = useConfetti()
+async function vote(choice: Choice, ev?: MouseEvent) {
+  const rect = (ev?.currentTarget as HTMLElement | null)?.getBoundingClientRect()
   if (busy.value) return
   busy.value = true; err.value = ''
   try {
@@ -80,6 +82,9 @@ async function vote(choice: Choice) {
     animate.value = true
     my.value = r.my; counts.value = r.counts
     emit('voted', props.item.id)
+    const x = rect ? rect.left + rect.width / 2 : window.innerWidth / 2
+    const y = rect ? rect.top + rect.height / 2 : window.innerHeight / 2
+    fire(x, y, choice === 'fair' ? ['#1F7A4D', '#3FAE78', '#F5C542', '#FFFFFF', '#141510'] : ['#C8402F', '#E9705F', '#F5C542', '#FFFFFF', '#141510'])
   } catch (e) { err.value = apiMessage(e, 'Vote gagal terkirim. Coba tekan lagi.') }
   busy.value = false
 }
@@ -115,7 +120,7 @@ defineExpose({ my, total, busy, refresh })
 
     <template v-if="!my">
       <div class="votes">
-        <button v-for="c in CHOICES" :key="c.key" type="button" :class="['btn', 'vote', c.key]" :disabled="busy" @click="vote(c.key)">
+        <button v-for="c in CHOICES" :key="c.key" type="button" :class="['btn', 'vote', c.key]" :disabled="busy" @click="vote(c.key, $event)">
           <img :src="c.key === 'unfair' ? '/thumbdown.svg' : '/thumbup.svg'" alt="" aria-hidden="true" width="34" height="40">
           <span class="big">{{ c.big }}</span><span class="sub">{{ c.sub }}</span>
         </button>
