@@ -107,6 +107,11 @@ select:focus-visible, input:focus-visible { outline: 3px solid var(--focus); out
 .back-link { color: var(--fg); font-weight: 600; font-size: 0.875rem; text-decoration: none; }
 @media (prefers-reduced-motion: reduce) { .deck .card { transition: none; } }
 
+/* footer */
+.site-foot { display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-between; gap: 0.25rem 1rem; margin-top: 1.5rem; font-size: 0.75rem; color: var(--muted); }
+.site-foot a { color: inherit; text-underline-offset: 0.2em; }
+.site-foot .beta { font-weight: 600; color: var(--fg); }
+
 /* elemen khusus desktop disembunyikan di mobile */
 .top-title, .menu, .ticker, .hero-card { display: none; }
 
@@ -116,6 +121,7 @@ select:focus-visible, input:focus-visible { outline: 3px solid var(--focus); out
   body { background: #FFFFFF url("/tile.png") center top / 200px 200px repeat; }
   .wrap { max-width: 56.75rem; padding-block: 1.75rem 4rem; gap: 1rem; }
   .wrap > *:not(.top) { width: 100%; max-width: 30rem; margin-inline: auto; }
+  .wrap > .site-foot { max-width: none; background: var(--surface); border: 2px solid #000; border-radius: 999px; padding: 0.5rem 1.25rem; }
   .wrap > .stack { max-width: none; gap: 1rem; }
 
   .top { position: relative; background: var(--surface); border: 2px solid #000; border-radius: 999px; padding: 0.5rem 1.25rem; min-height: 2.75rem; }

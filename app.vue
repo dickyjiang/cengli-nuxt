@@ -32,5 +32,9 @@ watch(() => useRoute().fullPath, () => { open.value = false })
       </div>
     </header>
     <NuxtPage />
+    <footer class="site-foot">
+      <span>© 2026 cenglibocengli · <span class="beta">Beta</span></span>
+      <span>SIDIKKI · <a href="mailto:hello@dickyjiang.com">hello@dickyjiang.com</a></span>
+    </footer>
   </main>
 </template>
