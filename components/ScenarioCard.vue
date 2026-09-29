@@ -105,8 +105,25 @@ async function refresh() {
 
 async function share() {
   const url = `${location.origin}/s/${props.item.id}`
+  const text = 'Cengli atau Bo Cengli? Ikut nilai.'
   try {
-    if (navigator.share) { await navigator.share({ title: 'Cengli / Bo Cengli', text: 'Cengli atau Bo Cengli? Ikut nilai.', url }); return }
+    // Utamakan gambar kartu hasil + link. Kalau perangkat tidak bisa berbagi file, kirim link saja.
+    if (navigator.share && navigator.canShare && counts.value) {
+      try {
+        const blob = await renderShareCard({
+          text: props.item.text, counts: counts.value, pct: pct.value, my: my.value,
+          verdict: verdict.value.text, verdictCls: verdict.value.cls
+        })
+        const file = new File([blob], `cengli-${props.item.id}.png`, { type: 'image/png' })
+        if (navigator.canShare({ files: [file] })) {
+          await navigator.share({ files: [file], title: 'Cengli / Bo Cengli', text: `${text}\n${url}` })
+          return
+        }
+      } catch (e) {
+        if ((e as Error)?.name === 'AbortError') return
+      }
+    }
+    if (navigator.share) { await navigator.share({ title: 'Cengli / Bo Cengli', text, url }); return }
     await navigator.clipboard.writeText(url)
     shareNote.value = 'Link disalin.'
     setTimeout(() => { shareNote.value = '' }, 2500)
