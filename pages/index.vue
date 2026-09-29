@@ -11,7 +11,6 @@ const idx = ref(0)
 const loading = ref(false)
 const loadErr = ref('')
 const voted = ref(false)
-const leaving = ref(false)
 const shareNote = ref('')
 const started = ref(false)          // desktop: kartu hero dulu, deck setelah "Mulai vote"
 const hot = ref(0)
@@ -45,15 +44,14 @@ function pickCat(slug: string) {
   load(true)
 }
 
-function advance() {
-  if (leaving.value || !current.value) return
-  leaving.value = true
-  setTimeout(() => {
-    idx.value++
-    voted.value = false; shareNote.value = ''; leaving.value = false
-    if (items.value.length - idx.value < 3 && nextBefore.value) load(false)
-  }, 260)
+function goNext() {
+  if (!current.value) return
+  idx.value++
+  voted.value = false; shareNote.value = ''
+  if (items.value.length - idx.value < 3 && nextBefore.value) load(false)
 }
+const { dragging, cardStyle, progress, fling, handlers } = useSwipeCard(() => { goNext() })
+function advance() { if (current.value) fling(-1) }
 
 function onVoted() { voted.value = true }
 
@@ -69,15 +67,6 @@ async function share() {
   } catch { /* dibatalkan */ }
 }
 
-// Geser ke kiri = kasus berikutnya (untuk kartu yang belum di-vote artinya Lewati).
-let startX = 0, startY = 0, tracking = false
-function down(e: PointerEvent) { startX = e.clientX; startY = e.clientY; tracking = true }
-function up(e: PointerEvent) {
-  if (!tracking) return
-  tracking = false
-  const dx = e.clientX - startX, dy = e.clientY - startY
-  if (dx < -80 && Math.abs(dx) > Math.abs(dy) * 1.5) advance()
-}
 </script>
 
 <template>
@@ -112,8 +101,8 @@ function up(e: PointerEvent) {
       <p class="note">Tanpa akun. Satu orang satu suara per kasus.</p>
     </section>
 
-    <div v-if="current" class="deck" @pointerdown="down" @pointerup="up" @pointercancel="tracking = false">
-      <ScenarioCard :key="current.id" :item="current" :class="{ leaving }" @skip="advance" @voted="onVoted" />
+    <div v-if="current" :class="['deck', { dragging }]" :style="{ '--p': progress }" v-bind="handlers">
+      <ScenarioCard :key="current.id" :item="current" :class="{ dragging }" :style="cardStyle" @skip="advance" @voted="onVoted" />
     </div>
 
     <div v-else-if="!loading" class="card">
@@ -124,7 +113,7 @@ function up(e: PointerEvent) {
     <p v-if="loadErr" class="msg err" role="alert">{{ loadErr }}</p>
 
     <div v-if="voted" class="after">
-      <p class="swipe-hint">Swipe untuk kasus berikutnya</p>
+      <p class="swipe-hint">Geser kartu untuk kasus lainnya</p>
       <div class="row" style="justify-content: center; gap: 0.75rem">
         <button type="button" class="btn btn-ghost" @click="advance">Berikutnya</button>
         <button type="button" class="btn btn-primary" @click="share">Bagikan hasil</button>
@@ -134,5 +123,7 @@ function up(e: PointerEvent) {
     <div v-else class="bottom">
       <NuxtLink to="/tulis" class="btn btn-ghost">+ Tambah Kasus Baru</NuxtLink>
     </div>
+
+    <ReportLink v-if="current" :key="current.id" :id="current.id" />
   </div>
 </template>

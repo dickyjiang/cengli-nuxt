@@ -1,16 +1,21 @@
 <script setup lang="ts">
 const route = useRoute()
 const { data: item, error } = await useFetch(`/api/scenarios/${route.params.id}`)
+const { dragging, cardStyle, progress, fling, handlers } = useSwipeCard(() => { navigateTo('/'); return false })
 useHead({ title: 'Cengli / Bo Cengli: menurut kamu adil?' })
 </script>
 
 <template>
   <div class="stack">
-    <div v-if="item" class="deck"><ScenarioCard :item="item" /></div>
+    <div v-if="item" :class="['deck', { dragging }]" :style="{ '--p': progress }" v-bind="handlers"><ScenarioCard :item="item" :class="{ dragging }" :style="cardStyle" /></div>
     <section v-else class="card">
       <h2>Kasus tidak ditemukan</h2>
       <p class="msg">{{ error?.statusMessage || 'Mungkin sudah dihapus.' }}</p>
     </section>
-    <div class="bottom"><NuxtLink to="/" class="btn btn-primary">Lihat kasus lain</NuxtLink></div>
+    <div class="bottom">
+      <NuxtLink to="/" class="btn btn-primary">Lihat kasus lain</NuxtLink>
+      <p v-if="item" class="swipe-hint">Geser kartu untuk kasus lainnya</p>
+    </div>
+    <ReportLink v-if="item" :id="item.id" />
   </div>
 </template>

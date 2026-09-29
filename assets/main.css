@@ -92,8 +92,13 @@ form { display: flex; flex-direction: column; gap: 0.75rem; }
 .chip:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
 .deck { position: relative; touch-action: pan-y; padding-block: 0.5rem; }
 .deck::before, .deck::after { content: ""; position: absolute; inset: 0.5rem 0; border: 3px solid #000; border-radius: 1.5rem; background: #D5D6D0; z-index: 0; pointer-events: none; }
-.deck::before { transform: rotate(-3deg) translate(0.25rem, -0.25rem); opacity: 0.6; }
-.deck::after { transform: rotate(-1.5deg) translate(0.125rem, -0.125rem); opacity: 0.85; }
+.deck::before { transform: rotate(calc(-3deg * (1 - var(--p, 0)))) translate(0.25rem, -0.25rem); opacity: 0.6; }
+.deck::before, .deck::after { transition: transform 0.28s ease; }
+.deck::after { transform: rotate(calc(-1.5deg * (1 - var(--p, 0)))) translate(0.125rem, -0.125rem); opacity: 0.85; }
+.deck.dragging { user-select: none; -webkit-user-select: none; cursor: grabbing; }
+.deck.dragging::before, .deck.dragging::after { transition: none; }
+.report { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.25rem 0.75rem; font-size: 0.8125rem; color: var(--muted); }
+.report .linkish { font-size: 0.8125rem; align-self: center; }
 .deck .card { position: relative; z-index: 1; box-shadow: 0 10px 24px rgba(20, 21, 16, 0.18); transition: transform 0.28s ease, opacity 0.28s ease; }
 .deck .card.leaving { transform: translateX(-115%) rotate(-10deg); opacity: 0; }
 .deck .card.dragging { transition: none; }
@@ -154,10 +159,11 @@ select:focus-visible, input:focus-visible { outline: 3px solid var(--focus); out
   .hero-card .sub { font-family: var(--font-display); font-weight: 700; font-size: 2rem; color: var(--muted); margin: -0.75rem 0 0; }
   .hero-card .note { margin: 0; font-size: 0.8125rem; color: var(--muted); }
 
-  .stack:not(.started) .deck, .stack:not(.started) .card, .stack:not(.started) .after, .stack:not(.started) .bottom { display: none; }
+  .stack:not(.started) .deck, .stack:not(.started) .card, .stack:not(.started) .after, .stack:not(.started) .bottom, .stack:not(.started) .report { display: none; }
   .deck, .stack > .card, .after, .bottom { width: 100%; max-width: 36rem; margin-inline: auto; }
   .chip:not(.on) { background: var(--surface); }
   .btn-ghost { background: var(--surface); }
   .swipe-hint { background: var(--surface); border-radius: 999px; padding: 0.25rem 0.875rem; }
   .deck::before, .deck::after { background: #E3E4DE; }
 }
+.site-foot > span:last-child { margin-left: auto; text-align: right; }

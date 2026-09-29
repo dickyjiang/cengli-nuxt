@@ -18,7 +18,6 @@ const counts = ref<Counts | null>(props.item.counts)
 const busy = ref(false)
 const err = ref('')
 const animate = ref(false)
-const reported = ref(false)
 
 const total = computed(() => (counts.value ? counts.value.fair + counts.value.unfair : 0))
 
@@ -74,10 +73,6 @@ async function refresh() {
   busy.value = false
 }
 
-async function report() {
-  if (reported.value) return
-  try { await $fetch(`/api/scenarios/${props.item.id}/report`, { method: 'POST' }); reported.value = true } catch { err.value = 'Laporan belum terkirim.' }
-}
 </script>
 
 <template>
@@ -93,7 +88,6 @@ async function report() {
       </div>
       <div class="card-links">
         <button type="button" class="linkish" @click="emit('skip', item.id)">Lewati</button>
-        <button type="button" class="linkish" :disabled="reported" @click="report">{{ reported ? 'Terima kasih, laporanmu diterima' : 'Laporkan' }}</button>
       </div>
     </template>
 
@@ -117,8 +111,5 @@ async function report() {
     </template>
 
     <p v-if="err" class="msg err" role="alert">{{ err }}</p>
-    <div v-if="my" class="card-links">
-      <button type="button" class="linkish" :disabled="reported" @click="report">{{ reported ? 'Terima kasih, laporanmu diterima' : 'Laporkan' }}</button>
-    </div>
   </article>
 </template>
