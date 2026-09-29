@@ -6,5 +6,5 @@ pages_build_output_dir = "dist"
 [[d1_databases]]
 binding = "DB"
 database_name = "cengli"
-database_id = "GANTI-DENGAN-DATABASE-ID"
+database_id = "98583129-1d12-486c-9c4e-274daee5782b"
 migrations_dir = "migrations"
