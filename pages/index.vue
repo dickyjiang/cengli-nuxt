@@ -98,13 +98,12 @@ function onVoted() { voted.value = true }
         <span class="thumb fair"><img src="/thumbup.svg" alt="" width="41" height="48"></span>
         <span class="thumb unfair"><img src="/thumbdown.svg" alt="" width="41" height="48"></span>
       </div>
-      <h2>Cengli - Bo Cengli?</h2>
+      <h2><span class="c-fair">Cengli</span> - <span class="c-unfair">Bo Cengli</span>?</h2>
       <p class="sub">Adil atau nggak?</p>
       <div class="row" style="justify-content:center;gap:.75rem">
         <button type="button" class="btn btn-ghost" @click="started = true">Mulai vote</button>
         <NuxtLink to="/tulis" class="btn btn-primary">Tulis kasus baru</NuxtLink>
       </div>
-      <p class="note">Tanpa akun. Satu orang satu suara per kasus.</p>
     </section>
 
     <div v-if="current" :class="['deck', { dragging }]" :style="{ '--p': progress }" v-bind="handlers">

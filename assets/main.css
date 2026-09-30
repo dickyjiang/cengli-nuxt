@@ -173,12 +173,12 @@ select:focus-visible, input:focus-visible { outline: 3px solid var(--focus); out
   .hero-card, .deck, .stack > .card { margin-top: 1.5rem; }
   .stack.started .hero-card { display: none; }
   .thumbs { display: flex; gap: 1.25rem; }
-  .thumb { width: 5rem; height: 5rem; border-radius: 50%; border: var(--stroke-control) solid var(--line); display: grid; place-items: center; }
+  .thumb { width: 5rem; height: 5rem; border-radius: 50%; display: grid; place-items: center; }
   .thumb.fair { background: var(--fair); } .thumb.unfair { background: var(--unfair); }
   .thumb img { height: 2.75rem; width: auto; }
   .hero-card h2 { font-family: var(--font-display); font-weight: 700; font-size: 3.5rem; line-height: 1.05; margin: 0; letter-spacing: -0.01em; }
-  .hero-card .sub { font-family: var(--font-display); font-weight: 700; font-size: var(--font-size-2xl); color: var(--muted); margin: -0.75rem 0 0; }
-  .hero-card .note { margin: 0; font-size: 0.8125rem; color: var(--muted); }
+  .hero-card .sub { font-family: var(--font-display); font-weight: 700; font-size: var(--font-size-2xl); color: #9A9C92; margin: -0.75rem 0 0; }
+  .hero-card h2 .c-fair { color: var(--fair); } .hero-card h2 .c-unfair { color: var(--unfair); }
 
   .stack.home:not(.started) .deck, .stack.home:not(.started) .card, .stack.home:not(.started) .after, .stack.home:not(.started) .bottom, .stack.home:not(.started) .report { display: none; }
   .deck, .stack > .card, .after, .bottom { width: 100%; max-width: 36rem; margin-inline: auto; }
