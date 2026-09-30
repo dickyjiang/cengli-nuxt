@@ -69,6 +69,19 @@ function advance() { if (current.value) fling(-1) }
 
 function onVoted() { voted.value = true }
 
+// Klik Hot Topik: kasus itu jadi kartu pertama di deck (semua kategori), lalu geser lanjut seperti biasa.
+function openHot(it: Item) {
+  if (cat.value !== '') {
+    cat.value = ''
+    items.value = first.value?.items ?? []
+    nextBefore.value = first.value?.nextBefore ?? null
+  }
+  items.value = [it, ...items.value.filter(i => i.id !== it.id)]
+  idx.value = 0
+  voted.value = false
+  started.value = true
+}
+
 </script>
 
 <template>
@@ -81,7 +94,9 @@ function onVoted() { voted.value = true }
     <div class="filters">
       <div v-if="hotItems.length" class="ticker">
         <strong>Hot Topik</strong>
-        <span class="ticker-text">{{ hotItems[hot % hotItems.length].text }}</span>
+        <Transition name="tick" mode="out-in">
+          <button :key="hotItems[hot % hotItems.length].id" type="button" class="ticker-text" @click="openHot(hotItems[hot % hotItems.length])">{{ hotItems[hot % hotItems.length].text }}</button>
+        </Transition>
       </div>
       <div v-if="cats?.items?.length" class="chips chips-m" role="group" aria-label="Kategori">
         <div v-for="(row, r) in chipRows" :key="r" class="chips-row">
@@ -98,20 +113,21 @@ function onVoted() { voted.value = true }
         <span class="thumb fair"><img src="/thumbup.svg" alt="" width="41" height="48"></span>
         <span class="thumb unfair"><img src="/thumbdown.svg" alt="" width="41" height="48"></span>
       </div>
-      <h2>Cengli - Bo Cengli?</h2>
+      <h2><span class="c-fair">Cengli</span> - <span class="c-unfair">Bo Cengli?</span></h2>
       <p class="sub">Adil atau nggak?</p>
       <div class="row" style="justify-content:center;gap:.75rem">
         <button type="button" class="btn btn-ghost" @click="started = true">Mulai vote</button>
         <NuxtLink to="/tulis" class="btn btn-primary">Tulis kasus baru</NuxtLink>
       </div>
-      <p class="note">Tanpa akun. Satu orang satu suara per kasus.</p>
     </section>
 
     <div v-if="current" :class="['deck', { dragging }]" :style="{ '--p': progress }" v-bind="handlers">
       <ScenarioCard ref="cardRef" :key="current.id" :item="current" :class="{ dragging }" :style="cardStyle" @skip="advance" @voted="onVoted" />
     </div>
 
-    <div v-else-if="!loading" class="card">
+    <div v-else-if="loading" class="loading" role="status"><LoadingThumb :size="72" /></div>
+
+    <div v-else class="card">
       <h2>{{ idx > 0 || cat ? 'Kasus di sini sudah habis' : 'Belum ada kasus' }}</h2>
       <p class="msg">Tulis kasusmu sendiri, atau cek lagi nanti.</p>
     </div>

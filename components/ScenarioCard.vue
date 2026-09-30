@@ -111,6 +111,17 @@ async function refresh() {
 async function share() {
   const url = `${location.origin}/s/${props.item.id}`
   const text = 'Cengli atau Bo Cengli? Ikut nilai.'
+  // Instagram Stories membuang teks dan link dari share sheet, jadi link disalin dulu supaya bisa ditempel lewat stiker Link.
+  // Harus dilakukan paling awal, selagi masih dalam klik pengguna.
+  let copied = false
+  if (navigator.share) {
+    try { await navigator.clipboard.writeText(url); copied = true } catch { /* tanpa izin clipboard: lanjut tanpa catatan */ }
+  }
+  const noteCopied = () => {
+    if (!copied) return
+    shareNote.value = 'Link disalin. Di Instagram, tempel lewat stiker Link.'
+    setTimeout(() => { shareNote.value = '' }, 6000)
+  }
   try {
     // Utamakan gambar kartu hasil + link. Kalau perangkat tidak bisa berbagi file, kirim link saja.
     if (navigator.share && navigator.canShare && counts.value) {
@@ -122,13 +133,14 @@ async function share() {
         const file = new File([blob], `cengli-${props.item.id}.png`, { type: 'image/png' })
         if (navigator.canShare({ files: [file] })) {
           await navigator.share({ files: [file], title: 'Cengli / Bo Cengli', text: `${text}\n${url}` })
+          noteCopied()
           return
         }
       } catch (e) {
         if ((e as Error)?.name === 'AbortError') return
       }
     }
-    if (navigator.share) { await navigator.share({ title: 'Cengli / Bo Cengli', text, url }); return }
+    if (navigator.share) { await navigator.share({ title: 'Cengli / Bo Cengli', text, url }); noteCopied(); return }
     await navigator.clipboard.writeText(url)
     shareNote.value = 'Link disalin.'
     setTimeout(() => { shareNote.value = '' }, 2500)
