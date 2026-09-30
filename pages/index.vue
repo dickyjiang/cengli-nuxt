@@ -18,6 +18,20 @@ const hotItems = computed(() => (first.value?.items ?? []).slice(0, 5))
 onMounted(() => { const t = setInterval(() => { if (hotItems.value.length > 1) hot.value = (hot.value + 1) % hotItems.value.length }, 5000); onBeforeUnmount(() => clearInterval(t)) })
 
 const { data: cats } = await useFetch<{ items: Cat[] }>('/api/categories')
+
+// HP: chip dibagi ke dua baris (seimbang menurut panjang teks) yang bisa digeser bersama.
+// Layar lebar: satu daftar berurutan yang membungkus otomatis (chipAll).
+const chipAll = computed(() => [{ slug: '', name: 'Semua' }, ...(cats.value?.items ?? [])])
+const chipRows = computed(() => {
+  const rows: { slug: string; name: string }[][] = [[], []]
+  const w = [0, 0]
+  for (const c of chipAll.value) {
+    const i = w[0] <= w[1] ? 0 : 1
+    rows[i].push(c)
+    w[i] += c.name.length + 4
+  }
+  return rows
+})
 const { data: first } = await useFetch<Page>('/api/scenarios', { query: { filter: 'new', limit: 10 } })
 if (first.value) { items.value = first.value.items; nextBefore.value = first.value.nextBefore }
 
@@ -69,9 +83,13 @@ function onVoted() { voted.value = true }
         <strong>Hot Topik</strong>
         <span class="ticker-text">{{ hotItems[hot % hotItems.length].text }}</span>
       </div>
-      <div v-if="cats?.items?.length" class="chips" role="group" aria-label="Kategori">
-        <button type="button" :class="['chip', { on: cat === '' }]" :aria-pressed="cat === ''" @click="pickCat('')">Semua</button>
-        <button v-for="c in cats.items" :key="c.id" type="button" :class="['chip', { on: cat === c.slug }]" :aria-pressed="cat === c.slug" @click="pickCat(c.slug)">{{ c.name }}</button>
+      <div v-if="cats?.items?.length" class="chips chips-m" role="group" aria-label="Kategori">
+        <div v-for="(row, r) in chipRows" :key="r" class="chips-row">
+          <button v-for="c in row" :key="c.slug || 'all'" type="button" :class="['chip', { on: cat === c.slug }]" :aria-pressed="cat === c.slug" @click="pickCat(c.slug)">{{ c.name }}</button>
+        </div>
+      </div>
+      <div v-if="cats?.items?.length" class="chips chips-d" role="group" aria-label="Kategori">
+        <button v-for="c in chipAll" :key="c.slug || 'all'" type="button" :class="['chip', { on: cat === c.slug }]" :aria-pressed="cat === c.slug" @click="pickCat(c.slug)">{{ c.name }}</button>
       </div>
     </div>
 
