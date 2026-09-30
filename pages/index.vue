@@ -4,6 +4,10 @@ interface Item { id: number; text: string; createdAt: number; my: Choice | null;
 interface Page { items: Item[]; nextBefore: number | null }
 interface Cat { id: number; name: string; slug: string }
 
+useHead({
+  title: 'Cengli / Bo Cengli: Adil atau Nggak? Vote Kejadian Sehari-hari',
+  meta: [{ name: 'description', content: 'Game polling santai: baca kejadian sehari-hari dari tetangga, pasangan, kantor sampai belanja online, vote adil atau nggak, lalu lihat hasilnya. Tanpa akun.' }]
+})
 const cat = ref('')
 const items = ref<Item[]>([])
 const nextBefore = ref<number | null>(null)

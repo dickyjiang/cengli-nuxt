@@ -14,6 +14,17 @@ useHead({
     { name: 'twitter:image', content: `${site}/og.png` }
   ]
 })
+// Canonical hanya untuk halaman yang boleh diindeks; query (?utm=...) dan alamat lain tidak dihitung.
+const route = useRoute()
+const CANONICAL = ['/', '/tentang', '/aturan']
+useHead({
+  link: computed(() => CANONICAL.includes(route.path) ? [{ rel: 'canonical', href: `${site}${route.path === '/' ? '/' : route.path}` }] : []),
+  script: [{
+    key: 'ld-website',
+    type: 'application/ld+json',
+    innerHTML: JSON.stringify({ '@context': 'https://schema.org', '@type': 'WebSite', name: 'Cengli / Bo Cengli', alternateName: 'Bo Cengli', url: `${site}/`, inLanguage: 'id', description: desc })
+  }]
+})
 const siteKey = useRuntimeConfig().public.turnstileSiteKey as string
 if (siteKey) useHead({ script: [{ key: 'turnstile', src: 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit', async: true, defer: true }] })
 const { ensure: ensureHuman } = useHuman()
