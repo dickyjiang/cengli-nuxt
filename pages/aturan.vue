@@ -6,7 +6,7 @@ useHead({ title: 'Aturan & Privasi | Cengli / Bo Cengli' })
   <div class="stack">
     <article class="prose card">
       <h1>Aturan & Privasi</h1>
-      <p class="muted">Diperbarui 29 September 2026. Situs ini masih versi beta, jadi isinya bisa berubah.</p>
+      <p class="muted">Diperbarui 30 September 2026. Situs ini masih versi beta, jadi isinya bisa berubah.</p>
 
       <h2>Aturan konten</h2>
       <p>Kasus yang kamu tulis akan dibaca dan dinilai orang lain. Supaya tetap aman dan enak dibaca:</p>
@@ -29,11 +29,11 @@ useHead({ title: 'Aturan & Privasi | Cengli / Bo Cengli' })
         <li>Semua data di atas dikaitkan dengan satu <strong>kode acak</strong> di cookie browsermu, bukan dengan nama atau email.</li>
       </ul>
       <h3>Cookie</h3>
-      <p>Kami memasang satu cookie bernama <code>cbc_vid</code> berisi kode acak. Fungsinya mengenali browsermu supaya satu orang hanya bisa vote sekali per kasus, membatasi spam, dan menampilkan Riwayatku. Cookie ini berlaku sekitar satu tahun dan tidak dipakai untuk iklan. Kalau kamu menghapusnya, riwayatmu di browser itu ikut hilang.</p>
+      <p>Kami memakai cookie fungsional untuk mengenali browsermu. Gunanya agar satu orang vote sekali per kasus, membatasi spam, dan menampilkan Riwayatku. Bukan untuk iklan. Kalau dihapus, riwayatmu di browser itu ikut hilang.</p>
       <h3>Pihak lain</h3>
-      <p>Situs ini berjalan di <strong>Cloudflare</strong> (hosting dan basis data). Formulir Tulis kasus memakai <strong>Cloudflare Turnstile</strong> untuk memastikan pengirim bukan bot; layanan itu bisa memproses data teknis seperti alamat IP dan info browser sesuai kebijakan Cloudflare.</p>
+      <p>Situs ini memakai layanan pihak ketiga untuk hosting, penyimpanan data, pencegahan bot, dan tampilan huruf (Cloudflare dan Google Fonts). Layanan itu bisa memproses data teknis seperti alamat IP dan info browser sesuai kebijakan mereka.</p>
       <h3>Penghapusan</h3>
-      <p>Mau kasusmu dihapus, atau punya pertanyaan soal datamu? Kirim email ke <a href="mailto:hello@dickyjiang.com">hello@dickyjiang.com</a> beserta tautan kasusnya. Kami tidak menjual data ke siapa pun.</p>
+      <p>Kasus yang kamu tulis bisa dihapus sendiri lewat Riwayatku. Untuk permintaan lain atau pertanyaan soal datamu, kirim email ke <a href="mailto:hello@dickyjiang.com">hello@dickyjiang.com</a> beserta tautan kasusnya. Kami tidak menjual data ke siapa pun.</p>
 
       <p class="row" style="gap: 0.75rem; flex-wrap: wrap">
         <NuxtLink to="/tentang" class="btn btn-ghost">Tentang</NuxtLink>
