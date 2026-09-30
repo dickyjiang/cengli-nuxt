@@ -18,17 +18,22 @@ withDefaults(defineProps<{ size?: number, label?: string }>(), { size: 64, label
 
 <style scoped>
 .lt { display: block; }
-.lt-dot { fill: var(--fair); animation: lt-color 2.4s ease-in-out infinite; }
-.lt-hand { transform-origin: 40px 40px; animation: lt-flip 2.4s ease-in-out infinite; }
+.lt-dot { fill: var(--fair); animation: lt-color 2.4s linear infinite; }
+.lt-hand { transform-origin: 40px 40px; animation: lt-flip 2.4s infinite; }
+/* Flip turun (30-56%) dan naik (80-100%). Warna berganti tepat saat tangan paling tipis (40% dan 90%). */
 @keyframes lt-flip {
-  0%, 30% { transform: scaleY(1); }
-  50%, 80% { transform: scaleY(-1); }
+  0%, 30% { transform: scaleY(1); animation-timing-function: cubic-bezier(.4, 0, 1, 1); }
+  40% { transform: scaleY(0.02); animation-timing-function: cubic-bezier(0, 0, .3, 1); }
+  50% { transform: scaleY(-1.12); animation-timing-function: ease-in-out; }
+  56%, 80% { transform: scaleY(-1); animation-timing-function: cubic-bezier(.4, 0, 1, 1); }
+  90% { transform: scaleY(-0.02); animation-timing-function: cubic-bezier(0, 0, .3, 1); }
+  96% { transform: scaleY(1.06); animation-timing-function: ease-in-out; }
   100% { transform: scaleY(1); }
 }
 @keyframes lt-color {
-  0%, 30% { fill: var(--fair); }
-  50%, 80% { fill: var(--unfair); }
-  100% { fill: var(--fair); }
+  0%, 39.9% { fill: var(--fair); }
+  40%, 89.9% { fill: var(--unfair); }
+  90%, 100% { fill: var(--fair); }
 }
 @media (prefers-reduced-motion: reduce) {
   .lt-dot, .lt-hand { animation: none; }
