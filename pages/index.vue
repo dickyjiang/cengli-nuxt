@@ -69,6 +69,19 @@ function advance() { if (current.value) fling(-1) }
 
 function onVoted() { voted.value = true }
 
+// Klik Hot Topik: kasus itu jadi kartu pertama di deck (semua kategori), lalu geser lanjut seperti biasa.
+function openHot(it: Item) {
+  if (cat.value !== '') {
+    cat.value = ''
+    items.value = first.value?.items ?? []
+    nextBefore.value = first.value?.nextBefore ?? null
+  }
+  items.value = [it, ...items.value.filter(i => i.id !== it.id)]
+  idx.value = 0
+  voted.value = false
+  started.value = true
+}
+
 </script>
 
 <template>
@@ -81,7 +94,9 @@ function onVoted() { voted.value = true }
     <div class="filters">
       <div v-if="hotItems.length" class="ticker">
         <strong>Hot Topik</strong>
-        <span class="ticker-text">{{ hotItems[hot % hotItems.length].text }}</span>
+        <Transition name="tick" mode="out-in">
+          <button :key="hotItems[hot % hotItems.length].id" type="button" class="ticker-text" @click="openHot(hotItems[hot % hotItems.length])">{{ hotItems[hot % hotItems.length].text }}</button>
+        </Transition>
       </div>
       <div v-if="cats?.items?.length" class="chips chips-m" role="group" aria-label="Kategori">
         <div v-for="(row, r) in chipRows" :key="r" class="chips-row">
