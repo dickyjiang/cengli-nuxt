@@ -33,7 +33,7 @@ useHead({ title: 'Aturan & Privasi | Cengli / Bo Cengli' })
       <h3>Pihak lain</h3>
       <p>Situs ini memakai layanan pihak ketiga untuk hosting, penyimpanan data, pencegahan bot, dan tampilan huruf (Cloudflare dan Google Fonts). Layanan itu bisa memproses data teknis seperti alamat IP dan info browser sesuai kebijakan mereka.</p>
       <h3>Penghapusan</h3>
-      <p>Kasus yang kamu tulis bisa dihapus sendiri lewat Riwayatku. Untuk permintaan lain atau pertanyaan soal datamu, kirim email ke <a href="mailto:hello@dickyjiang.com">hello@dickyjiang.com</a> beserta tautan kasusnya. Kami tidak menjual data ke siapa pun.</p>
+      <p>Kasus yang kamu tulis bisa dihapus sendiri lewat Riwayatku. Untuk permintaan lain atau pertanyaan soal datamu, kirim email ke <a href="mailto:hello@cengli.men">hello@cengli.men</a> beserta tautan kasusnya. Kami tidak menjual data ke siapa pun.</p>
 
       <p class="row" style="gap: 0.75rem; flex-wrap: wrap">
         <NuxtLink to="/tentang" class="btn btn-ghost">Tentang</NuxtLink>

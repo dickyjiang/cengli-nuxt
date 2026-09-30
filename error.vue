@@ -14,7 +14,7 @@ const home = () => clearError({ redirect: '/' })
       <div class="stack">
         <section class="card" role="alert">
           <h2>{{ notFound ? 'Halaman tidak ditemukan' : 'Ada yang tidak beres' }}</h2>
-          <p class="msg">{{ notFound ? 'Alamatnya mungkin salah, atau halamannya sudah dihapus.' : 'Coba muat ulang sebentar lagi. Kalau tetap begini, kabari kami di hello@dickyjiang.com.' }}</p>
+          <p class="msg">{{ notFound ? 'Alamatnya mungkin salah, atau halamannya sudah dihapus.' : 'Coba muat ulang sebentar lagi. Kalau tetap begini, kabari kami di hello@cengli.men.' }}</p>
           <button type="button" class="btn btn-primary" @click="home">Ke beranda</button>
         </section>
       </div>

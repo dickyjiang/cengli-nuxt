@@ -36,7 +36,7 @@ useHead({ title: 'Tentang | Cengli / Bo Cengli', meta: [{ name: 'description', c
       <p>Hasil polling hanya pendapat pengunjung, bukan penilaian hukum atau moral yang sah. Ini untuk seru-seruan dan bahan ngobrol.</p>
 
       <h2>Kontak</h2>
-      <p>Saran, laporan, atau permintaan penghapusan: <a href="mailto:hello@dickyjiang.com">hello@dickyjiang.com</a>.</p>
+      <p>Saran, laporan, atau permintaan penghapusan: <a href="mailto:hello@cengli.men">hello@cengli.men</a>.</p>
       <p>Dibuat oleh SIDIKKI.</p>
 
       <p class="row" style="gap: 0.75rem; flex-wrap: wrap">
