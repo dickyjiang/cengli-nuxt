@@ -111,7 +111,9 @@ function onVoted() { voted.value = true }
       <ScenarioCard ref="cardRef" :key="current.id" :item="current" :class="{ dragging }" :style="cardStyle" @skip="advance" @voted="onVoted" />
     </div>
 
-    <div v-else-if="!loading" class="card">
+    <div v-else-if="loading" class="loading" role="status"><LoadingThumb :size="72" /></div>
+
+    <div v-else class="card">
       <h2>{{ idx > 0 || cat ? 'Kasus di sini sudah habis' : 'Belum ada kasus' }}</h2>
       <p class="msg">Tulis kasusmu sendiri, atau cek lagi nanti.</p>
     </div>

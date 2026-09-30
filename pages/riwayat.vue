@@ -88,7 +88,7 @@ function leader(r: Row) {
       {{ tab === 'voted' ? 'Kamu belum vote satu kasus pun.' : 'Kamu belum menulis kasus.' }}
       <NuxtLink :to="tab === 'voted' ? '/' : '/tulis'" class="btn btn-ghost">{{ tab === 'voted' ? 'Mulai vote' : 'Tulis kasus baru' }}</NuxtLink>
     </p>
-    <p v-else-if="loading" class="msg" role="status">Memuat...</p>
+    <div v-else-if="loading" class="loading" role="status"><LoadingThumb :size="56" /></div>
 
     <p v-if="err" class="msg err" role="alert">{{ err }}</p>
     <button v-if="nextBefore" type="button" class="btn btn-ghost" :disabled="loading" @click="load(false)">Muat lebih banyak</button>
