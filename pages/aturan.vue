@@ -1,5 +1,5 @@
 <script setup lang="ts">
-useHead({ title: 'Aturan & Privasi | Cengli / Bo Cengli' })
+useHead({ title: 'Aturan & Privasi | Cengli / Bo Cengli', meta: [{ name: 'description', content: 'Aturan konten dan kebijakan privasi Cengli / Bo Cengli: data apa yang disimpan, cookie fungsional, dan cara menghapus kasusmu.' }] })
 </script>
 
 <template>
