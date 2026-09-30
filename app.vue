@@ -42,7 +42,6 @@ watch(() => useRoute().fullPath, () => { open.value = false })
   <footer class="site-foot">
     <span>© 2026 cenglibocengli · v0.1 ·
       <NuxtLink to="/tentang">Tentang</NuxtLink> · <NuxtLink to="/aturan">Aturan &amp; Privasi</NuxtLink></span>
-    <ContactEmail />
   </footer>
   </div>
 </template>
