@@ -26,7 +26,7 @@ watch(() => useRoute().fullPath, () => { open.value = false })
   <div class="shell">
   <main class="wrap">
     <header class="top">
-      <NuxtLink to="/" class="logo" aria-label="CLBCL, ke beranda"><span class="f">CL</span><span class="u">BCL</span></NuxtLink>
+      <NuxtLink to="/" class="logo" aria-label="CLBCL, ke beranda"><img src="/logo.png" alt="" width="640" height="263" decoding="async"></NuxtLink>
       <span class="top-title" aria-hidden="true">Adil atau nggak?</span>
       <div class="menu">
         <button type="button" class="menu-btn" aria-label="Menu" :aria-expanded="open" @click="open = !open"><i /><i /><i /></button>
