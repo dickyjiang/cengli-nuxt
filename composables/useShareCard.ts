@@ -7,6 +7,7 @@ export interface ShareCardData {
   my: Choice | null
   verdict: string
   verdictCls: string
+  stance?: string
 }
 
 const W = 1080
@@ -145,7 +146,7 @@ export async function renderShareCard(d: ShareCardData): Promise<Blob> {
   if (d.my) {
     ctx.fillStyle = d.my === 'fair' ? FAIR : UNFAIR
     ctx.textAlign = d.my === 'fair' ? 'left' : 'right'
-    ctx.fillText('PILIHANKU', d.my === 'fair' ? innerX : innerX + innerW, y + 24)
+    ctx.fillText(d.stance ? `PILIHANKU · ${d.stance}` : 'PILIHANKU', d.my === 'fair' ? innerX : innerX + innerW, y + 24)
   }
   y += youH + gap3
 

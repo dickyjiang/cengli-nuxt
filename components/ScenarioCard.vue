@@ -52,6 +52,23 @@ const verdict = computed(() => {
   return { text: `Mayoritas: ${LABELS[top[0]]}`, cls: top[0] }
 })
 
+// Reaksi setelah vote: posisi pemilih dibanding orang lain. Bikin penasaran dan pengin share.
+type Tone = 'early' | 'tie' | 'hot' | 'strong' | 'major' | 'minor'
+const reaction = computed<{ tone: Tone; emo: string; text: string; tag: string } | null>(() => {
+  const m = my.value, c = counts.value
+  if (!m || !c || !total.value) return null
+  const p = pct.value[m]
+  if (total.value < MIN_VOTES) {
+    return { tone: 'early', emo: '✨', tag: '', text: total.value === 1 ? 'Kamu yang pertama nilai kasus ini!' : `Kamu termasuk ${total.value} orang pertama yang nilai.` }
+  }
+  if (pct.value.fair === pct.value.unfair) return { tone: 'tie', emo: '⚖️', tag: 'IMBANG 50:50', text: 'Imbang 50:50. Suaramu jadi penentu!' }
+  if (p >= 45 && p <= 55) return { tone: 'hot', emo: '🔥', tag: `BEDA TIPIS · ${p}%`, text: `Debat panas! Beda tipis, ${p}% sepihak sama kamu.` }
+  if (p >= 85) return { tone: 'strong', emo: '💯', tag: `SEPIHAK ${p}%`, text: `Sepakat banget. ${p}% orang sepihak sama kamu.` }
+  if (p > 55) return { tone: 'major', emo: '🤝', tag: `SEPIHAK ${p}%`, text: `Kamu sepihak sama ${p}% orang.` }
+  return { tone: 'minor', emo: '😳', tag: `MINORITAS ${p}%`, text: `Kamu minoritas! Cuma ${p}% yang sepihak.` }
+})
+const shareLabel = computed(() => reaction.value?.tone === 'minor' ? 'Ajak teman bela kamu' : reaction.value?.tone === 'hot' || reaction.value?.tone === 'tie' ? 'Minta teman jadi penentu' : 'Share ke teman')
+
 function apiMessage(e: unknown, fallback: string) {
   const m = (e as { statusMessage?: string; data?: { statusMessage?: string } })
   return m?.data?.statusMessage || m?.statusMessage || fallback
@@ -128,7 +145,7 @@ async function share() {
       try {
         const blob = await renderShareCard({
           text: props.item.text, counts: counts.value, pct: pct.value, my: my.value,
-          verdict: verdict.value.text, verdictCls: verdict.value.cls
+          verdict: verdict.value.text, verdictCls: verdict.value.cls, stance: reaction.value?.tag || ''
         })
         const file = new File([blob], `cengli-${props.item.id}.png`, { type: 'image/png' })
         if (navigator.canShare({ files: [file] })) {
@@ -168,6 +185,7 @@ defineExpose({ my, showing, total, busy, refresh })
 
     <template v-else-if="counts">
       <p :class="['verdict', verdict.cls]">{{ verdict.text }}</p>
+      <p v-if="reaction" :class="['reaction', reaction.tone]" role="status"><span class="emo" aria-hidden="true">{{ reaction.emo }}</span><span>{{ reaction.text }}</span></p>
       <div class="split-head">
         <div v-for="(k, i) in ORDER" :key="k" :class="['side', k, { r: i === 1 }]">
           <span>{{ LABELS[k] }}</span>
@@ -176,11 +194,11 @@ defineExpose({ my, showing, total, busy, refresh })
         </div>
       </div>
       <div class="split-track" role="img" :aria-label="`Cengli ${pct.fair} persen, Bo Cengli ${pct.unfair} persen`">
-        <div v-for="k in ORDER" :key="k" :class="['seg', k]" :style="{ width: pct[k] + '%' }" />
+        <div v-for="k in ORDER" :key="k" :class="['seg', k]" :style="{ width: shown[k] + '%' }" />
       </div>
       <div class="split-foot"><span>{{ counts.fair }} suara</span><span>{{ counts.unfair }} suara</span></div>
       <div class="share-row">
-        <button type="button" class="btn btn-primary" @click="share"><span class="ico" aria-hidden="true" />Share ke teman</button>
+        <button type="button" class="btn btn-primary" @click="share"><span class="ico" aria-hidden="true" />{{ shareLabel }}</button>
         <p v-if="shareNote" class="msg" role="status">{{ shareNote }}</p>
       </div>
     </template>
